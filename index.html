@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <title>Toy blog 02 by HelloYKYK</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Toy blog 02</h1>
+        <h2>TabHost + Fragment + ViewPager + Fragment 的坑</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/HelloYKYK/TOY_Blog_02/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/HelloYKYK/TOY_Blog_02/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/HelloYKYK/TOY_Blog_02" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h3>
+<a id="android--tabhost--fragment--viewpager--fragment-的坑" class="anchor" href="#android--tabhost--fragment--viewpager--fragment-%E7%9A%84%E5%9D%91" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Android  TabHost + Fragment + ViewPager + Fragment 的坑</h3>
+
+<blockquote>
+<p>问题:ViewPager的滑动使得最深级的Fragment不再显示数据
+原理参考:
+1.如何替换和更新ViewPager中的Fragment
+<a href="https://segmentfault.com/a/1190000003742057">https://segmentfault.com/a/1190000003742057</a>
+2.fragment中嵌套viewpager，vierpager中有多个fragment，不显示 .
+<a href="http://blog.csdn.net/candicelijx/article/details/39023095">http://blog.csdn.net/candicelijx/article/details/39023095</a>
+之前遇到过使用TabHost时,最底层的Fragment在ViewPager滑动过后会不能正常显示数据</p>
+</blockquote>
+
+<hr>
+
+<h2>
+<a id="解决方案" class="anchor" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>解决方案:</h2>
+
+<ul>
+<li>1.//使用getChildFragmentManager()代替getActivity().getFragmentManager(),因为当前的Fragment由Activity的Fragment来管理的话,会造成滑动回来后数据丢失的情况:</li>
+</ul>
+
+<div class="highlight highlight-source-java"><pre>    newsPagerAdapter <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">NewsPagerAdapter</span>(getChildFragmentManager());</pre></div>
+
+<ul>
+<li>2.//一次加载上来可以使得滑动更平滑</li>
+</ul>
+
+<div class="highlight highlight-source-java"><pre>pager<span class="pl-k">.</span>setOffscreenPageLimit((mMediaItemEntries <span class="pl-k">==</span> <span class="pl-c1">null</span>)<span class="pl-k">?</span><span class="pl-c1">7</span><span class="pl-k">:</span>mMediaItemEntries<span class="pl-k">.</span>size());</pre></div>
+      </section>
+    </div>
+
+    
+  </body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "name": "Toy blog 02",
+  "tagline": "TabHost + Fragment + ViewPager + Fragment 的坑",
+  "body": "###Android  TabHost + Fragment + ViewPager + Fragment 的坑\r\n>问题:ViewPager的滑动使得最深级的Fragment不再显示数据\r\n原理参考:\r\n1.如何替换和更新ViewPager中的Fragment\r\nhttps://segmentfault.com/a/1190000003742057\r\n2.fragment中嵌套viewpager，vierpager中有多个fragment，不显示 .\r\nhttp://blog.csdn.net/candicelijx/article/details/39023095\r\n之前遇到过使用TabHost时,最底层的Fragment在ViewPager滑动过后会不能正常显示数据\r\n\r\n\r\n\r\n----------\r\n## 解决方案:\r\n\r\n* 1.//使用getChildFragmentManager()代替getActivity().getFragmentManager(),因为当前的Fragment由Activity的Fragment来管理的话,会造成滑动回来后数据丢失的情况:\r\n```java\r\n\tnewsPagerAdapter = new NewsPagerAdapter(getChildFragmentManager());\r\n```\r\n* 2.//一次加载上来可以使得滑动更平滑\r\n```java\r\npager.setOffscreenPageLimit((mMediaItemEntries == null)?7:mMediaItemEntries.size());\r\n```",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
